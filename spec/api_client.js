@@ -9,17 +9,17 @@ var expect = require('chai').expect,
 
 describe('api client', function () {
 
-  beforeEach(function() {
+  beforeEach(function () {
     MockDate.set(1234567890000);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     MockDate.reset();
   });
 
   it('should make a get request with correct headers', function (done) {
 
-    var urlBase = 'https://api.notifications.service.gov.uk',
+    var urlBase = 'https://api.notifynl.nl',
       path = '/email',
       body = {
         'body': 'body text'
@@ -32,7 +32,7 @@ describe('api client', function () {
       new ApiClient(urlBase, serviceId, apiKeyId),
       new ApiClient(urlBase, 'key_name' + '-' + serviceId + '-' + apiKeyId),
       new ApiClient('key_name' + ':' + serviceId + ':' + apiKeyId),
-    ].forEach(function(client, index, clients) {
+    ].forEach(function (client, index, clients) {
 
       nock(urlBase, {
         reqheaders: {
@@ -47,7 +47,7 @@ describe('api client', function () {
         .then(function (response) {
           expect(response.data).to.deep.equal(body);
           if (index == clients.length - 1) done();
-      });
+        });
 
     });
 
@@ -71,19 +71,19 @@ describe('api client', function () {
       }
     })
       .post(path, data)
-      .reply(200, {"hooray": "bkbbk"});
+      .reply(200, { "hooray": "bkbbk" });
 
     apiClient = new ApiClient(urlBase, serviceId, apiKeyId);
     apiClient.post(path, data)
       .then(function (response) {
         expect(response.status).to.equal(200);
         done();
-    });
+      });
   });
 
   it('should direct get requests through the proxy when set', function (done) {
-    var urlBase = 'https://api.notifications.service.gov.uk',
-      proxyConfig = { host: 'addressofmyproxy.test', protocol: 'http'},
+    var urlBase = 'https://api.notifynl.nl',
+      proxyConfig = { host: 'addressofmyproxy.test', protocol: 'http' },
       path = '/email',
       apiClient = new ApiClient(urlBase, 'apiKey');
 
@@ -97,12 +97,12 @@ describe('api client', function () {
         expect(response.status).to.equal(200);
         expect(response.config.proxy).to.eql(proxyConfig);
         done();
-    });
+      });
   });
 
   it('should direct post requests through the proxy when set', function (done) {
-    var urlBase = 'https://api.notifications.service.gov.uk',
-      proxyConfig = { host: 'addressofmyproxy.test', protocol: 'http'},
+    var urlBase = 'https://api.notifynl.nl',
+      proxyConfig = { host: 'addressofmyproxy.test', protocol: 'http' },
       path = '/email',
       apiClient = new ApiClient(urlBase, 'apiKey');
 
@@ -116,11 +116,11 @@ describe('api client', function () {
         expect(response.status).to.equal(200);
         expect(response.config.proxy).to.eql(proxyConfig);
         done();
-    });
+      });
   });
 
   it('should use the custom Axios client when set', function (done) {
-    var urlBase = 'https://api.notifications.service.gov.uk',
+    var urlBase = 'https://api.notifynl.nl',
       path = '/email',
       body = {
         'body': 'body text'
