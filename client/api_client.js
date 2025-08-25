@@ -1,7 +1,7 @@
 var defaultRestClient = require('axios').default,
-    createGovukNotifyToken = require('../client/authentication.js'),
-    notifyProductionAPI = 'https://api.notifications.service.gov.uk',
-    version = require('../package.json').version;
+  createGovukNotifyToken = require('../client/authentication.js'),
+  notifyProductionAPI = 'https://api.notifynl.nl',
+  version = require('../package.json').version;
 
 /**
  * @param urlBase
@@ -64,7 +64,7 @@ Object.assign(ApiClient.prototype, {
    *
    * @returns {Promise}
    */
-  get: function(path, additionalOptions) {
+  get: function (path, additionalOptions) {
     var options = {
       method: 'get',
       url: this.urlBase + path,
@@ -74,7 +74,7 @@ Object.assign(ApiClient.prototype, {
       }
     };
     Object.assign(options, additionalOptions)
-    if(this.proxy !== null) options.proxy = this.proxy;
+    if (this.proxy !== null) options.proxy = this.proxy;
 
     return this.restClient(options);
   },
@@ -86,7 +86,7 @@ Object.assign(ApiClient.prototype, {
    *
    * @returns {Promise}
    */
-  post: function(path, data){
+  post: function (path, data) {
     var options = {
       method: 'post',
       url: this.urlBase + path,
@@ -97,7 +97,7 @@ Object.assign(ApiClient.prototype, {
       }
     };
 
-    if(this.proxy !== null) options.proxy = this.proxy;
+    if (this.proxy !== null) options.proxy = this.proxy;
 
     return this.restClient(options);
   },
@@ -106,7 +106,7 @@ Object.assign(ApiClient.prototype, {
    *
    * @param {object} an axios proxy config
    */
-  setProxy: function(proxyConfig){
+  setProxy: function (proxyConfig) {
     this.proxy = proxyConfig
   },
 
@@ -114,7 +114,7 @@ Object.assign(ApiClient.prototype, {
    *
    * @param {object} an axios instance
    */
-  setClient: function(restClient){
+  setClient: function (restClient) {
     this.restClient = restClient;
   }
 });
