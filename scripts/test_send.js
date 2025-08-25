@@ -1,17 +1,17 @@
 var argv = require('optimist')
-    .usage('Usage: $0' +
-      ' -b [baseUrl]' +
-      ' -s [notify secret]' +
-      ' -t [templateId]' +
-      ' -d [destination (email address or phone number, not needed for letters]' +
-      ' -p [personalisation (required for letter {"address_line_1": "mrs test", "address_line_2": "1 test street", "postcode": "SW1 1AA"})]' +
-      ' -m [type (email, sms or letter, default email)]')
-    .demand(['s', 't'])
-    .argv,
+  .usage('Usage: $0' +
+    ' -b [baseUrl]' +
+    ' -s [notify secret]' +
+    ' -t [templateId]' +
+    ' -d [destination (email address or phone number, not needed for letters]' +
+    ' -p [personalisation (required for letter {"address_line_1": "mrs test", "address_line_2": "1 test street", "postcode": "SW1 1AA"})]' +
+    ' -m [type (email, sms or letter, default email)]')
+  .demand(['s', 't'])
+  .argv,
   NotifyClient = require('../client/notification').NotifyClient,
   notifyClient,
 
-  baseUrl = argv.b || 'https://api.notifications.service.gov.uk',
+  baseUrl = argv.b || 'https://api.notifynl.nl',
   secret = argv.s,
   templateId = argv.t,
   destination = argv.d,
@@ -20,34 +20,34 @@ var argv = require('optimist')
 
 notifyClient = new NotifyClient(baseUrl, secret);
 
-switch(type) {
+switch (type) {
 
   case 'email':
     notifyClient.sendEmail(templateId, destination, personalisation)
-      .then(function(response) {
+      .then(function (response) {
         console.log('Notify response: ' + JSON.stringify(response));
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log('Error ' + error);
       });
     break;
 
   case 'sms':
     notifyClient.sendSms(templateId, String(destination), personalisation)
-      .then(function(response) {
+      .then(function (response) {
         console.log('Notify response: ' + JSON.stringify(response));
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log('Error ' + error);
       });
     break;
 
   case 'letter':
     notifyClient.sendLetter(templateId, personalisation)
-      .then(function(response) {
+      .then(function (response) {
         console.log('Notify response: ' + JSON.stringify(response));
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log('Error ' + error);
       });
     break;
